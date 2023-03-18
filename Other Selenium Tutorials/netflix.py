@@ -1,7 +1,3 @@
-""" TigerDalanDan Selenium project, where I use Selenium to open Netflix on Chrome, and ultimately
-leading to the show 'Breaking Bad.' """
-
-
 from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
