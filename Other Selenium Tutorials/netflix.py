@@ -17,6 +17,7 @@ driver.maximize_window()
 
 driver.get('https://www.netflix.com/sg/login')
 
+
 # keep credentials secret # FIXME# FIXME# FIXME# FIXME
 file_path = '/Users/user/Documents/pswrds'
 
