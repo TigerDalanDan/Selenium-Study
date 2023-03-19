@@ -1,7 +1,3 @@
-""" TigerDalanDan Selenium project, where I use Selenium to open Netflix on Chrome, and ultimately
-leading to the show 'Breaking Bad.' """
-
-
 from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
@@ -16,7 +12,6 @@ driver = webdriver.Chrome()
 driver.maximize_window()
 
 driver.get('https://www.netflix.com/sg/login')
-
 
 # keep credentials secret # FIXME# FIXME# FIXME# FIXME
 file_path = '/Users/user/Documents/pswrds'
