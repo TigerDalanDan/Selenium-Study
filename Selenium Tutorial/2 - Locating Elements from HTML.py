@@ -72,3 +72,4 @@ finally:
     '''Exits Chrome tab.'''
     time.sleep(2)
     driver.quit()
+
