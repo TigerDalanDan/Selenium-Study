@@ -3,46 +3,101 @@ leading to the show 'Breaking Bad.' """
 
 
 from selenium import webdriver
-import time
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 
+website = 'https://www.netflix.com/sg/login'
+netflix_show = 'Breaking Bad'
+
+'''Starts Chrome maximized.'''
 options = Options()
+options.add_argument("start-maximized")
 options.add_experimental_option('detach', True)
-chrome_driver = webdriver.Chrome()
 
-driver = webdriver.Chrome()
-driver.maximize_window()
 
-driver.get('https://www.netflix.com/sg/login')
+'''Disables Chrome extensions.'''
+options.add_argument("disable-extensions")
 
-# keep credentials secret # FIXME# FIXME# FIXME# FIXME
-file_path = '/Users/user/Documents/pswrds'
 
-# open the file in read mode # FIXME# FIXME# FIXME# FIXME
+'''Locates ChromeDriver file.'''
+driver = webdriver.Chrome(
+    service=Service(ChromeDriverManager().install()),
+    options=options
+)
+
+'''Gets website.'''
+driver.get(website)
+
+
+'''keep credentials secret'''
+file_path = '/Users/jet32/Documents/VSCode - Learning Selenium/Other Selenium Tutorials/pass.txt'
+
+'''Open the file in read mode.'''
 with open(file_path, "r") as file:
     # read the contents of the file
     file_contents = file.read()
 
 
-# username # FIXME# FIXME# FIXME# FIXME# FIXME# FIXME
-driver.find_element("name", "userLoginId").send_keys(file_contents[0])
+'''Inputs username.'''
+username = file_contents.split()[0]
+driver.find_element("name", "userLoginId").send_keys(username)
 
 
-# password # FIXME# FIXME# FIXME# FIXME# FIXME# FIXME
-driver.find_element("name", "password").send_keys(file_contents[1])
+'''Inputs password.'''
+password = file_contents.split()[1]
+driver.find_element("name", "password").send_keys(password)
 
 
-# sign in
-driver.find_element("data-uia", "button[login-submit-button]").send_keys(Keys.ENTER) # FIXME
+'''Signs in.'''
+signin_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "button[data-uia='login-submit-button']")
+))
+# clicks the button
+driver.execute_script("arguments[0].click();", signin_button)
+
+
+'''Selects profile.'''
+select_profile = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "a[href='/SwitchProfile?tkn=3R3VSOEK3BGCJJ7VUM63KBNLIU']")
+))
+# clicks the profile
+driver.execute_script("arguments[0].click();", select_profile)
+
+
+'''Clicks on search bar.'''
+show_search = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "button[data-uia='search-box-launcher']")
+))
+# clicks the button
+driver.execute_script("arguments[0].click();", show_search)
+
+
+'''Inputs show and searches.'''
+search_bar = driver.find_element("name", "searchInput").send_keys(netflix_show)
 time.sleep(3)
 
 
-# profile selection
-driver.find_element("profile_name", 'Joni').click() # FIXME
+'''Presses show.'''
+press_show = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "a[aria-label='Breaking Bad']")
+))
+# clicks the button
+driver.execute_script("arguments[0].click();", press_show)
 time.sleep(3)
 
 
-# show selection
-driver.find_element("link_text", 'Breaking Bad').click() # FIXME
+'''Presses play.'''
+play_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "button[class='color-primary hasLabel hasIcon ltr-ed00td']")
+))
+# clicks the button
+driver.execute_script("arguments[0].click();", play_button)
+time.sleep(99999)
+
