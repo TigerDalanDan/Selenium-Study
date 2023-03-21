@@ -1,7 +1,6 @@
 """ TigerDalanDan Selenium project, where I use Selenium to open Netflix on Chrome, and ultimately
 leading to the show 'Breaking Bad.' """
 
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -37,7 +36,7 @@ driver.get(website)
 
 
 '''keep credentials secret'''
-file_path = '/Users/jet32/Documents/VSCode - Learning Selenium/Other Selenium Tutorials/pass.txt'
+file_path = '/Users/jet32/Documents/netflix_credentials.txt'
 
 '''Open the file in read mode.'''
 with open(file_path, "r") as file:
